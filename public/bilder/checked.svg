@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10">
+  <defs>
+    <style>.img{display:block}.img:target{display:inline}</style>
+  </defs>
+  <g id="checked" class="img">
+    <circle cx="5" fill="#171C56" cy="5" r="5"/>
+  </g>
+  <g id="disabled" class="img">
+    <circle cx="5" fill="#171c56" cy="5" r="5"/>
+  </g>
+</svg>

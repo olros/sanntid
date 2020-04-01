@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94063698-6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-94063698-6');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sanntid - Avganger</title>
+    <meta name="description" content="Sjekk avgangene fra din holdeplass i sanntid, uansett hvor i Norge du bor! Se reiseforslag med alle transportmåter fra og til alle steder i hele Norge. Velg dine egne favorittholdeplasser så du finner dem raskere neste gang. Tidene oppdateres automatisk og er basert på nasjonale reisedata.">
+    <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+    <link rel="stylesheet" href="buss.css?v=1.7">
+    <link rel="icon" type="image/png" href="bilder/logo.png">
+    <link rel="apple-touch-icon" href="bilder/logo.png">
+    <meta name="theme-color" content="#007849">
+    <link rel="manifest" id="my-manifest-placeholder">
+</head>
+<body class="green">
+  <script>
+  if (localStorage.getItem("theme")) {
+    document.body.className = localStorage.getItem("theme");
+    var metaThemeColor = document.querySelector("meta[name=theme-color]");
+    switch (localStorage.getItem("theme")) {
+      case 'light': metaThemeColor.setAttribute("content", "#ffffff"); var manifestColor = "#ffffff"; break;
+      case 'dark': metaThemeColor.setAttribute("content", "#111111"); var manifestColor = "#111111"; break;
+      case 'navy': metaThemeColor.setAttribute("content", "#181C56"); var manifestColor = "#181C56"; break;
+      case 'green': metaThemeColor.setAttribute("content", "#007849"); var manifestColor = "#007849"; break;
+      case 'brown': metaThemeColor.setAttribute("content", "#5D4037"); var manifestColor = "#5D4037"; break;
+      case 'red': metaThemeColor.setAttribute("content", "#8b0000"); var manifestColor = "#8b0000"; break;
+      default: metaThemeColor.setAttribute("content", "#007849"); var manifestColor = "#007849"; break;
+    }
+  } else {
+    document.body.className = "green";
+     var manifestColor = "#007849";
+  }
+  var dynamicManifest = {
+    "name": "Sanntid",
+    "short_name": "Sanntid",
+    "description": "Sjekk når bussen kommer i sanntid og finn reiseforslag for hele Norge",
+    "background_color": manifestColor,
+    "theme_color": manifestColor,
+    "display": "standalone",
+    "icons": [{
+      "src": "https://sanntid.ga/bilder/logo.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }]
+  }
+  const stringManifest = JSON.stringify(dynamicManifest);
+  const blob = new Blob([stringManifest], {type: 'application/json'});
+  const manifestURL = URL.createObjectURL(blob);
+  document.querySelector('#my-manifest-placeholder').setAttribute('href', manifestURL);
+  </script>
+  <div id="backdrop" class=""></div>
+  <div class="sideView">
+    <div class="map">
+      <div id="map"></div>
+    </div>
+  </div>
+  <div id="mapLargeContainer">
+    <div id="mapLargeContainerHeader">
+  	  <button type="button" id="close-map-button" class="button">
+        <img src="bilder/close.svg" height="28px" width="28px" alt="Tilbake" style="padding: 4px -0px;;">
+      </button>
+  	  <div class="headerText">
+        <h4 id="mapHeaderText">Kart</h4>
+      </div>
+    </div>
+    <div id="mapLarge"></div>
+  </div>
+  <div class="main">
+    <div class="header">
+      <div class="menuContainer" id="burgerMenuButton" onclick="animateMenu(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
+      <div id="timeContainer"></div>
+      <div id="backdropMenu" class=""></div>
+      <div class="burgerMenuContainer" id="burgerMenuContainer" style="display:none">
+        <div class="menu"><div class="listArrow"></div>
+          <ul>
+            <li><a href="index.html">Reise</a></li>
+            <div class="listSeparator"></div>
+            <li><a href="avganger.html">Avganger</a></li>
+            <div class="listSeparator"></div>
+            <li><a href="favoritter.html">Favoritter</a></li>
+            <div class="listSeparator"></div>
+            <div class="menuThemeSelect"><fieldset class="formGroup">
+              <legend class="formLabel">Valgt tema</legend>
+              <div id="radio" class="radioGroup">
+                <div class="radioDiv"><input id="themeLight" class="radioInput" type="radio" name="theme" value="light"><label for="themeLight" class="radioThemeLabel">Lys</label></div>
+                <div class="radioDiv"><input id="themeDark" class="radioInput" type="radio" name="theme" value="dark"><label for="themeDark" class="radioThemeLabel">Mørk</label></div>
+                <div class="radioDiv"><input id="themeNavy" class="radioInput" type="radio" name="theme" value="navy"><label for="themeNavy" class="radioThemeLabel">Navy-blå</label></div>
+                <div class="radioDiv"><input id="themeBrown" class="radioInput" type="radio" name="theme" value="brown"><label for="themeBrown" class="radioThemeLabel">Brun</label></div>
+                <div class="radioDiv"><input id="themeGreen" class="radioInput" type="radio" name="theme" value="green" checked><label for="themeGreen" class="radioThemeLabel">Grønn</label></div>
+                <div class="radioDiv"><input id="themeRed" class="radioInput" type="radio" name="theme" value="red"><label for="themeRed" class="radioThemeLabel">Rød</label></div>
+              </div>
+            </fieldset></div>
+          </ul>
+        </div></div>
+      <div class="topHeader">
+        <div>
+          <h1>Sanntid</h1>
+        </div>
+      </div>
+      <a href="index.html">
+        <div class="velg">
+          <div class="split">
+            <div class="centered">
+              <h4>Reise</h4>
+            </div>
+          </div>
+        </a>
+        <div class="mellomValg"></div>
+        <a href="avganger.html">
+          <div class="split velgValgt">
+            <div class="centered">
+              <h4>Avganger</h4>
+            </div>
+          </div>
+        </a>
+        <div class="mellomValg"></div>
+        <a href="favoritter.html">
+          <div class="split">
+            <div class="centered">
+              <h4>Favoritter</h4>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="innhold">
+      <div style="padding:5px 20px; background-color: var(--primary-color);margin-top: -10px;">
+        <div id="sporPosisjon" class="posisjonBoks" style="/* display: none; */">
+            <div>
+                <h3>Skru på stedstjenester</h3><p>For å kunne gi deg de beste reiseforslagene, trenger vi å vite hvor du er</p>
+            <button type="button" class="posisjonKnapp" id="giPosisjon">Gi tilgang til posisjon</button>
+            <button type="button" class="posisjonKnapp" id="senerePosisjon">Kanskje senere</button>
+
+            </div>
+        </div>
+        <p style="margin: 0px 0px 5px;color: var(--text-primary);">Avganger</p>
+        <div id="searchArea">
+          <div class="input-wrapper " style="z-index: 400;">
+            <label for="inpSok">Fra</label>
+            <input aria-autocomplete="list" autocomplete="off" id="inpSok" placeholder="Søk etter stoppested" type="search" value="" style="z-index: 4;">
+          </div>
+          <div class="containerSok" id="containerSok">
+            <div id="resultSok"></div>
+          </div>
+        </div>
+        <div class="mapsContainer" id="mapSmallContainer" style="position:relative">
+          <div id="mapSmall"></div>
+          <div id="mapSmallOverlay"></div>
+        </div>
+      </div>
+      <div style='height: 34px; background-color: var(--background-content-border); color:var(--text-content); padding: 13px 20px 0px; font-size: 16px; font-weight: bold;'>Nærmeste holdeplasser</div>
+      <div style="width:100%;">
+        <div id="resultArea">
+          <div id="resultText"><p style='padding:5px 20px'>Laster</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="avganger.js?v=1.7"></script>
+  <script src="maps.js?v=1.7"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW-tlZ_tbbMMPcVXnZgZGQheI3F269PPM&callback=initMap"></script>
+</body>
+</html>

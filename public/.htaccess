@@ -1,0 +1,22 @@
+RewriteEngine on
+RewriteRule ^/beta/(.*)$ /$1 [R=301,L]
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# RewriteEngine On
+
+# # to externally redirect
+# RewriteCond %{THE_REQUEST} \ /holdeplass\?h=([^&]+)
+# RewriteRule ^holdeplass$ /holdeplass/%1 [L,R=301]
+
+# # to internally rewrite back
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^holdeplass/([^/]+)+)$ /holdeplass?h=$1 [L]
+
+RewriteEngine On
+
+RewriteCond ${QUERY_STRING} ^h=([^&]+)$
+RewriteRule ^/holdeplass/$ /holdeplass/%1/? [NC,R=301,L]
