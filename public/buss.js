@@ -168,7 +168,7 @@ function getNextDepartureForStop(stopID) {
             stopPlace(id: "NSR:StopPlace:` + stopID + `") {
                 id
                 name
-                estimatedCalls(timeRange: 86400, numberOfDepartures: 200, omitNonBoarding:true) {
+                estimatedCalls(timeRange: 86400, numberOfDepartures: 200) {
                     realtime
                     aimedDepartureTime
                     expectedDepartureTime

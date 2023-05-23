@@ -836,7 +836,7 @@ let closestSearchStops = [];
 let closest = [];
 const numberOfStops = 25;
 const maxDistanceinMeters = 5000;
-const entur_graphql_endpoint = "https://api.entur.io/journey-planner/v2/graphql";
+const entur_graphql_endpoint = "https://api.entur.io/journey-planner/v3/graphql";
 
 function getParameterByName(name) {
   var url = (window.location.href).toLowerCase();

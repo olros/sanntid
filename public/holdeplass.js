@@ -24,7 +24,7 @@ var numberOfDepartures = 20;
 let closestStops = [];
 var favoritter = [];
 let stopData = [];
-const entur_graphql_endpoint = "https://api.entur.io/journey-planner/v2/graphql";
+const entur_graphql_endpoint = "https://api.entur.io/journey-planner/v3/graphql";
 var updateInterval = 6000;
 
 function getParameterByName(name, url) {
@@ -83,7 +83,7 @@ function getNextDepartureForStop(stopID, numberOfDepartures) {
                 tariffZones {
                   id
                 }
-                estimatedCalls(timeRange: 86400, numberOfDepartures: ` + numberOfDepartures + `, omitNonBoarding:true) {
+                estimatedCalls(timeRange: 86400, numberOfDepartures: ` + numberOfDepartures + `) {
                     realtime
                     aimedDepartureTime
                     expectedDepartureTime

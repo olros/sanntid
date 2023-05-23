@@ -44,7 +44,7 @@
     var h = getParameterByName('h');
     updateManifest(getParameterByName('h'));
     function updateManifest(stopID) {
-      fetch("https://api.entur.io/journey-planner/v2/graphql", {
+      fetch("https://api.entur.io/journey-planner/v3/graphql", {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',

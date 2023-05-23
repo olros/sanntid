@@ -229,7 +229,7 @@ function initMap(container) {
 }
 
 function addGoogleMarkersToMap(position) {
-    apiUrl = 'https://api.entur.io/journey-planner/v2/graphql';
+    apiUrl = 'https://api.entur.io/journey-planner/v3/graphql';
 
     var i;
     var bounds = map.getBounds();
@@ -258,7 +258,7 @@ function addGoogleMarkersToMap(position) {
               latitude
               longitude
               transportMode
-              estimatedCalls(numberOfDepartures: 3, omitNonBoarding:true) {
+              estimatedCalls(numberOfDepartures: 3) {
                 realtime
                 expectedDepartureTime
                 destinationDisplay {

@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 header('Content-Type: text/html; charset=utf-8');
-$service_url = 'https://api.entur.io/journey-planner/v2/graphql';
+$service_url = 'https://api.entur.io/journey-planner/v3/graphql';
 
 $curl = curl_init($service_url);
 

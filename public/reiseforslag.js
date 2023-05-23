@@ -12,7 +12,7 @@ let closest = [];
 // Defines how many nearby stops to locate: (Must be 1!)
 const numberOfStops = 1;
 const maxDistanceinMeters = 10000;
-const entur_graphql_endpoint = "https://api.entur.io/journey-planner/v2/graphql";
+const entur_graphql_endpoint = "https://api.entur.io/journey-planner/v3/graphql";
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -106,20 +106,19 @@ function getNextDepartureForStop(fromId, fromName, fromLocality, fromLat, fromLo
               numTripPatterns: 10
               maximumTransfers: 5
               dateTime: "` + time + `"
-              minimumTransferTime: 180
+              transferSlack: 20
               walkSpeed: 1.3
-              wheelchair: false
               arriveBy: ` + arriveBy + `
             ) {
               tripPatterns {
-                startTime
+                expectedStartTime
                 duration
                 walkDistance
                 legs {
                   mode
                   distance
                   duration
-                  startTime
+                  expectedStartTime
                   expectedEndTime
                   steps {
                     latitude
@@ -222,7 +221,7 @@ function updateTravelOptions(data) {
         duration = Math.floor(duration / 60) + ' t ' + duration % 60;
       }
       if (reiseArray[0][a].legs[0].fromEstimatedCall === null) {
-        var startTime = (reiseArray[0][a].legs[0].startTime).slice(11,16);
+        var startTime = (reiseArray[0][a].legs[0].expectedStartTime).slice(11,16);
       } else {
         var startTime = (reiseArray[0][a].legs[0].fromEstimatedCall.expectedDepartureTime).slice(11,16);
       }
@@ -231,7 +230,7 @@ function updateTravelOptions(data) {
       var etapper = "";
       for (let e = 0; e < antallEtapper; e++) {
         if (reiseArray[0][a].legs[e].fromEstimatedCall === null) {
-          var startTime1 = (reiseArray[0][a].legs[e].startTime).slice(11,16);
+          var startTime1 = (reiseArray[0][a].legs[e].expectedStartTime).slice(11,16);
           var frontText = "Gå";
           var color = "var(--normal-color)";
         } else {
@@ -282,7 +281,7 @@ function moreDetails(a) {
         if (varighet == 0) {
           varighet = "mindre enn 1";
         }
-        var avgang = (reiseArray[0][a].legs[i].startTime).slice(11,16);
+        var avgang = (reiseArray[0][a].legs[i].expectedStartTime).slice(11,16);
         if (i > 0) {
           var fra = reiseArray[0][a].legs[i - 1].toEstimatedCall.quay.stopPlace.name;
         } else {
@@ -503,7 +502,7 @@ function getTransportMode(mode) {
 // Translates minutes until departure to readable text
 function timeUntilDeparture(a, b) {
     if (reiseArray[0][a].legs[b].fromEstimatedCall === null) {
-      var c = reiseArray[0][a].legs[b].startTime;
+      var c = reiseArray[0][a].legs[b].expectedStartTime;
     } else {
       var c = reiseArray[0][a].legs[b].fromEstimatedCall.expectedDepartureTime;
     }
@@ -535,7 +534,7 @@ function timeUntilDeparture(a, b) {
             return "9 min";
         default:
             if (reiseArray[0][a].legs[b].fromEstimatedCall === null) {
-              return reiseArray[0][a].legs[b].startTime.slice(11,16);
+              return reiseArray[0][a].legs[b].expectedStartTime.slice(11,16);
             } else {
               return reiseArray[0][a].legs[b].fromEstimatedCall.expectedDepartureTime.slice(11,16);
             }

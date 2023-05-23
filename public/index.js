@@ -18,7 +18,7 @@ let closest = [];
 // Defines how many nearby stops to locate:
 const numberOfStops = 25;
 const maxDistanceinMeters = 5000;
-const entur_graphql_endpoint = "https://api.entur.io/journey-planner/v2/graphql";
+const entur_graphql_endpoint = "https://api.entur.io/journey-planner/v3/graphql";
 
 // When page is loaded
 window.addEventListener('load', function() {

@@ -1,15 +1,15 @@
 <?php
 header('Content-Type: application/json');
 header('Content-Type: text/html; charset=utf-8');
-$service_url = 'https://api.entur.io/journey-planner/v2/graphql';
+$service_url = 'https://api.entur.io/journey-planner/v3/graphql';
 
 $curl = curl_init($service_url);
 
 $id = $_GET['id'];
 $antall = $_GET['antall'];
 
-// $curl_post_data = array("query" => '{stopPlace(id: "NSR:StopPlace:' . $id . '") {id name latitude longitude estimatedCalls(timeRange: 86400, numberOfDepartures: ' . $antall . ', omitNonBoarding:true) {realtime aimedDepartureTime expectedDepartureTime destinationDisplay {frontText} serviceJourney {id operator {id} journeyPattern {line {publicCode id transportMode}}}}}}');
-$curl_post_data = array("query" => '{stopPlace(id: "NSR:StopPlace:' . $id . '") {id name estimatedCalls(timeRange: 86400, numberOfDepartures: ' . $antall . ', omitNonBoarding:true) {realtime expectedDepartureTime destinationDisplay {frontText} serviceJourney {journeyPattern {line {publicCode id}}}}}}');
+// $curl_post_data = array("query" => '{stopPlace(id: "NSR:StopPlace:' . $id . '") {id name latitude longitude estimatedCalls(timeRange: 86400, numberOfDepartures: ' . $antall . ') {realtime aimedDepartureTime expectedDepartureTime destinationDisplay {frontText} serviceJourney {id operator {id} journeyPattern {line {publicCode id transportMode}}}}}}');
+$curl_post_data = array("query" => '{stopPlace(id: "NSR:StopPlace:' . $id . '") {id name estimatedCalls(timeRange: 86400, numberOfDepartures: ' . $antall . ') {realtime expectedDepartureTime destinationDisplay {frontText} serviceJourney {journeyPattern {line {publicCode id}}}}}}');
 $data_string =  json_encode($curl_post_data);
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
